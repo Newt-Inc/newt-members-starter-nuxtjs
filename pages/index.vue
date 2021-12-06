@@ -1,10 +1,10 @@
 <template>
   <main class="Container">
     <Cover img="https://as1.ftcdn.net/v2/jpg/03/45/18/76/1000_F_345187680_Eo4rKPDmdB6QTaGXFwU4NE5BaLlpGooL.jpg" />
-    <div class="Articles">
-      <Dropdown :categories="categories" />
+    <div class="Members">
+      <Dropdown :positions="positions" />
       <div class="Inner">
-        <ArticleCard v-for="article in articles" :key="article._id" :article="article" />
+        <MemberCard v-for="member in members" :key="member._id" :member="member" />
       </div>
       <Pagination :total="total" :current="1" />
     </div>
@@ -12,19 +12,19 @@
 </template>
 
 <script>
-import { getArticles } from 'api/article'
-import { getCategories } from 'api/category'
+import { getMembers } from 'api/member'
+import { getPositions } from 'api/position'
 
 export default {
   async asyncData(context) {
-    const [resArticles, resCategories] = await Promise.all([
-      getArticles(context.$config),
-      getCategories(context.$config),
+    const [resMembers, resPositions] = await Promise.all([
+      getMembers(context.$config),
+      getPositions(context.$config),
     ])
     return {
-      articles: resArticles.articles,
-      total: resArticles.total,
-      categories: resCategories.categories,
+      members: resMembers.members,
+      total: resMembers.total,
+      positions: resPositions.positions,
     }
   },
   data() {
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style scoped>
-.Articles {
+.Members {
   padding: 24px 24px 40px 24px;
   margin: 0 auto;
 }
@@ -43,12 +43,12 @@ export default {
   flex-wrap: wrap;
 }
 @media (min-width: 600px) {
-  .Articles {
+  .Members {
     padding: 60px;
   }
 }
 @media (min-width: 960px) {
-  .Articles {
+  .Members {
     max-width: 1024px;
   }
 }

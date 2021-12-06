@@ -1,7 +1,7 @@
 import { createClient } from 'newt-client-js'
-const ARTICLE_MODEL_NAME = 'article'
+const MEMBER_MODEL_NAME = 'member'
 
-export const getArticles = async (config, options={ search: '', category: '', page: 1, query: {} }) => {
+export const getMembers = async (config, options={ search: '', position: '', page: 1, query: {} }) => {
   try {
     const client = createClient({
       projectUid: config.projectUid,
@@ -10,7 +10,7 @@ export const getArticles = async (config, options={ search: '', category: '', pa
     })
     const _options = {
       search: '',
-      category: '',
+      position: '',
       page: 1,
       query: {},
       ...options,
@@ -21,26 +21,26 @@ export const getArticles = async (config, options={ search: '', category: '', pa
     if (_options.search) {
       query.or = [
         {
-          title: {
+          fullName: {
             match: _options.search
           }
         },
         {
-          body: {
+          profile: {
             match: _options.search
           }
         }
       ]
     }
-    if (_options.category) {
-      query.categories = _options.category
+    if (_options.position) {
+      query.position = _options.position
     }
     const page = _options.page || 1
     const limit = config.pageLimit || 10
     const skip = (page - 1) * limit
     const result = await client.getContents({
       appUid:config.appUid,
-      modelUid: ARTICLE_MODEL_NAME,
+      modelUid: MEMBER_MODEL_NAME,
       query: {
         depth: 2,
         limit,
@@ -50,17 +50,17 @@ export const getArticles = async (config, options={ search: '', category: '', pa
     })
     return {
       ...result,
-      articles: result.items,
+      members: result.items,
     }
   } catch (err) {
     return {
-      articles: [],
+      members: [],
       total: 0,
     }
   }
 }
 
-export const getArticleBySlug = async (config, slug) => {
+export const getMemberBySlug = async (config, slug) => {
   try {
     const client = createClient({
       projectUid: config.projectUid,
@@ -69,7 +69,7 @@ export const getArticleBySlug = async (config, slug) => {
     })
     const result = await client.getContents({
       appUid:config.appUid,
-      modelUid: ARTICLE_MODEL_NAME,
+      modelUid: MEMBER_MODEL_NAME,
       query: {
         depth: 2,
         limit: 1,

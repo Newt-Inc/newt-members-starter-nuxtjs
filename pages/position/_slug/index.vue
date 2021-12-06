@@ -2,11 +2,11 @@
   <main class="Container">
     <Cover img="https://as1.ftcdn.net/v2/jpg/03/45/18/76/1000_F_345187680_Eo4rKPDmdB6QTaGXFwU4NE5BaLlpGooL.jpg" />
     <div class="Members">
-      <Dropdown :positions="positions" />
+      <Dropdown :positions="positions" :selected="selected" />
       <div class="Inner">
         <MemberCard v-for="member in members" :key="member._id" :member="member" />
       </div>
-      <Pagination :total="total" :current="pageNumber" />
+      <Pagination :total="total" :current="1" :base-path="`/position/${selected}`" />
     </div>
   </main>
 </template>
@@ -16,19 +16,18 @@ import { getMembers } from 'api/member'
 import { getPositions } from 'api/position'
 
 export default {
-  async asyncData({ $config, redirect, params }) {
-    const pageNumber = Number(params.page)
-    if (Number.isNaN(pageNumber)) return redirect(302, '/')
-
-    const [resMembers, resPositions] = await Promise.all([
-      getMembers($config, { page: pageNumber }),
-      getPositions($config),
-    ])
+  async asyncData({ $config, params }) {
+    const { positions } = await getPositions($config)
+    const position = positions.find((_position) => _position.slug === params.slug)
+    const { members, total } = await getMembers($config, {
+      position: (position && position._id) || ''
+    })
+    
     return {
-      pageNumber,
-      members: resMembers.members,
-      total: resMembers.total,
-      positions: resPositions.positions
+      members,
+      total,
+      positions,
+      selected: params.slug || ''
     }
   },
   data() {

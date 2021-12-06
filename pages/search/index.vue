@@ -1,12 +1,12 @@
 <template>
   <main class="Container">
-    <div v-if="articles.length > 0" class="Search">
+    <div v-if="members.length > 0" class="Search">
       <p class="Search_Text">Found {{total}} results for your search</p>
       <div class="Search_Results">
-        <article v-for="article in articles" :key="article._id" class="Article">
-          <NuxtLink :to="`/article/${article.slug}`" class="Article_Link">
-            <h1 class="Article_Title">{{article.title}}</h1>
-            <p class="Article_Description">{{toPlainText(article.body)}}</p>
+        <article v-for="member in members" :key="member._id" class="Article">
+          <NuxtLink :to="`/member/${member.slug}`" class="Article_Link">
+            <h1 class="Article_Title">{{member.fullName}}</h1>
+            <p class="Article_Description">{{toPlainText(member.profile || '')}}</p>
           </NuxtLink>
         </article>
         <Pagination />
@@ -21,28 +21,28 @@
 </template>
 
 <script>
-import { getArticles } from 'api/article'
+import { getMembers } from 'api/member'
 import { toPlainText } from 'utils/markdown'
 
 export default {
   layout: 'sub',
   data() {
     return {
-      articles: [],
+      members: [],
       total: 0,
       isLoading: true
     }
   },
   async created() {
-    const { articles, total } = await getArticles(this.$config, {
+    const { members, total } = await getMembers(this.$config, {
       search: this.$route.query.q || '',
       query: {
-        body: {
+        profile: {
           fmt: 'text'
         }
       }
     })
-    this.articles = articles
+    this.members = members
     this.total = total
     this.isLoading = false
   },
