@@ -95,6 +95,19 @@ export default {
   width: 100%;
   height: 100%;
 }
+.Article_EyecatchEmpty {
+  background: rgba(0,0,0,.05);
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .Article_Inner {
   padding: 16px;
 }
