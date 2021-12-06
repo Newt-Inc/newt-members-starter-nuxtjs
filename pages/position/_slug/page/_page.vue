@@ -6,7 +6,7 @@
       <div class="Inner">
         <MemberCard v-for="member in members" :key="member._id" :member="member" />
       </div>
-      <Pagination :total="total" :current="1" :base-path="`/position/${selected}`" />
+      <Pagination :total="total" :current="pageNumber" :base-path="`/position/${selected}`" />
     </div>
   </main>
 </template>
@@ -30,7 +30,8 @@ export default {
       members,
       total,
       positions,
-      selected: params.slug || ''
+      selected: params.slug || '',
+      pageNumber,
     }
   },
   data() {
