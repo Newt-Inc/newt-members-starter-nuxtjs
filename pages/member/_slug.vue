@@ -6,7 +6,9 @@
           <img :src="member.profileImage.src" alt="" width="1080" height="680" />
         </template>
         <template v-else>
-          <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="#CCCCCC"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          <div class="Article_EyecatchEmpty">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60px" height="60px" viewBox="0 0 24 24" fill="#CCCCCC"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/></svg>
+          </div>
         </template>
       </div>
       <p v-if="member.position" class="Article_Category">{{member.position.name}}</p>
@@ -42,6 +44,19 @@ export default {
 .Article_Eyecatch img {
   width: 100%;
   height: auto;
+}
+.Article_EyecatchEmpty {
+  background: rgba(0,0,0,.05);
+  width: 100%;
+  height: 0;
+  padding: 64% 0 0 0;
+  position: relative;
+}
+.Article_EyecatchEmpty svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -30px 0 0 -30px;
 }
 .Article_Category {
   margin: 0;
