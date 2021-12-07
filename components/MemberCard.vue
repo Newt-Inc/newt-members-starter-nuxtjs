@@ -12,7 +12,7 @@
         </template>
       </div>
       <div class="Article_Inner">
-        <p class="Article_Category">Founder</p>
+        <p class="Article_Category">{{member.position.name}}</p>
         <h2 class="Article_Title">{{member.fullName}}</h2>
       </div>
     </NuxtLink>
