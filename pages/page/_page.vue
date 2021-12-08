@@ -1,34 +1,46 @@
 <template>
-  <main class="Container">
-    <Cover img="https://as1.ftcdn.net/v2/jpg/03/45/18/76/1000_F_345187680_Eo4rKPDmdB6QTaGXFwU4NE5BaLlpGooL.jpg" />
-    <div class="Members">
-      <Dropdown :positions="positions" />
-      <div class="Inner">
-        <MemberCard v-for="member in members" :key="member._id" :member="member" />
+  <Wrapper :app="app">
+    <main class="Container">
+      <Cover
+        v-if="app && app.cover && app.cover.value"
+        :img="app.cover.value"
+      />
+      <div class="Members">
+        <Dropdown :positions="positions" />
+        <div class="Inner">
+          <MemberCard
+            v-for="member in members"
+            :key="member._id"
+            :member="member"
+          />
+        </div>
+        <Pagination :total="total" :current="pageNumber" />
       </div>
-      <Pagination :total="total" :current="pageNumber" />
-    </div>
-  </main>
+    </main>
+  </Wrapper>
 </template>
 
 <script>
 import { getMembers } from 'api/member'
 import { getPositions } from 'api/position'
+import { getApp } from 'api/app'
 
 export default {
   async asyncData({ $config, redirect, params }) {
     const pageNumber = Number(params.page)
     if (Number.isNaN(pageNumber)) return redirect(302, '/')
 
-    const [resMembers, resPositions] = await Promise.all([
+    const [resMembers, resPositions, app] = await Promise.all([
       getMembers($config, { page: pageNumber }),
       getPositions($config),
+      getApp($config),
     ])
     return {
       pageNumber,
       members: resMembers.members,
       total: resMembers.total,
-      positions: resPositions.positions
+      positions: resPositions.positions,
+      app,
     }
   },
   data() {

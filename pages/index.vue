@@ -1,30 +1,42 @@
 <template>
-  <main class="Container">
-    <Cover img="https://as1.ftcdn.net/v2/jpg/03/45/18/76/1000_F_345187680_Eo4rKPDmdB6QTaGXFwU4NE5BaLlpGooL.jpg" />
-    <div class="Members">
-      <Dropdown :positions="positions" />
-      <div class="Inner">
-        <MemberCard v-for="member in members" :key="member._id" :member="member" />
+  <Wrapper :app="app">
+    <main class="Container">
+      <Cover
+        v-if="app && app.cover && app.cover.value"
+        :img="app.cover.value"
+      />
+      <div class="Members">
+        <Dropdown :positions="positions" />
+        <div class="Inner">
+          <MemberCard
+            v-for="member in members"
+            :key="member._id"
+            :member="member"
+          />
+        </div>
+        <Pagination :total="total" :current="1" />
       </div>
-      <Pagination :total="total" :current="1" />
-    </div>
-  </main>
+    </main>
+  </Wrapper>
 </template>
 
 <script>
 import { getMembers } from 'api/member'
 import { getPositions } from 'api/position'
+import { getApp } from 'api/app'
 
 export default {
   async asyncData(context) {
-    const [resMembers, resPositions] = await Promise.all([
+    const [resMembers, resPositions, app] = await Promise.all([
       getMembers(context.$config),
       getPositions(context.$config),
+      getApp(context.$config),
     ])
     return {
       members: resMembers.members,
       total: resMembers.total,
       positions: resPositions.positions,
+      app,
     }
   },
   data() {

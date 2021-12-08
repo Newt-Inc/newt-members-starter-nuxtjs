@@ -2,7 +2,12 @@
   <nav class="Pagination">
     <ul class="Pagination_Items">
       <li v-for="page in pages" :key="page.number" class="Pagination_Item">
-        <NuxtLink type="button" :to="`${basePath}/page/${page.number}`" :class="`Pagination_Button ${page.isCurrent ? '_current' : ''}`">{{page.number}}</NuxtLink>
+        <NuxtLink
+          type="button"
+          :to="`${basePath}/page/${page.number}`"
+          :class="`Pagination_Button ${page.isCurrent ? '_current' : ''}`"
+          >{{ page.number }}</NuxtLink
+        >
       </li>
     </ul>
   </nav>
@@ -22,7 +27,7 @@ export default {
     basePath: {
       type: String,
       default: '',
-    }
+    },
   },
   computed: {
     pages() {
@@ -33,11 +38,11 @@ export default {
           return {
             ...value,
             number: pageNumber,
-            isCurrent: this.current === pageNumber
+            isCurrent: this.current === pageNumber,
           }
         })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -67,7 +72,7 @@ export default {
   justify-content: center;
   color: #333;
   text-decoration: none;
-  transition: background .2s;
+  transition: background 0.2s;
   font-weight: bold;
   font-size: 1.2rem;
   background: none;

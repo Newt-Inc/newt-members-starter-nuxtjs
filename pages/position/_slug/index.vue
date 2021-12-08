@@ -1,33 +1,51 @@
 <template>
-  <main class="Container">
-    <Cover img="https://as1.ftcdn.net/v2/jpg/03/45/18/76/1000_F_345187680_Eo4rKPDmdB6QTaGXFwU4NE5BaLlpGooL.jpg" />
-    <div class="Members">
-      <Dropdown :positions="positions" :selected="selected" />
-      <div class="Inner">
-        <MemberCard v-for="member in members" :key="member._id" :member="member" />
+  <Wrapper :app="app">
+    <main class="Container">
+      <Cover
+        v-if="app && app.cover && app.cover.value"
+        :img="app.cover.value"
+      />
+      <div class="Members">
+        <Dropdown :positions="positions" :selected="selected" />
+        <div class="Inner">
+          <MemberCard
+            v-for="member in members"
+            :key="member._id"
+            :member="member"
+          />
+        </div>
+        <Pagination
+          :total="total"
+          :current="1"
+          :base-path="`/position/${selected}`"
+        />
       </div>
-      <Pagination :total="total" :current="1" :base-path="`/position/${selected}`" />
-    </div>
-  </main>
+    </main>
+  </Wrapper>
 </template>
 
 <script>
 import { getMembers } from 'api/member'
 import { getPositions } from 'api/position'
+import { getApp } from 'api/app'
 
 export default {
   async asyncData({ $config, params }) {
     const { positions } = await getPositions($config)
-    const position = positions.find((_position) => _position.slug === params.slug)
+    const app = await getApp($config)
+    const position = positions.find(
+      (_position) => _position.slug === params.slug
+    )
     const { members, total } = await getMembers($config, {
-      position: (position && position._id) || ''
+      position: (position && position._id) || '',
     })
-    
+
     return {
       members,
       total,
       positions,
-      selected: params.slug || ''
+      selected: params.slug || '',
+      app,
     }
   },
   data() {

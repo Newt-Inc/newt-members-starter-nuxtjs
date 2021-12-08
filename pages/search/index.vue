@@ -1,36 +1,49 @@
 <template>
-  <main class="Container">
-    <div v-if="members.length > 0" class="Search">
-      <p class="Search_Text">Found {{total}} results for your search</p>
-      <div class="Search_Results">
-        <article v-for="member in members" :key="member._id" class="Article">
-          <NuxtLink :to="`/member/${member.slug}`" class="Article_Link">
-            <h1 class="Article_Title">{{member.fullName}}</h1>
-            <p class="Article_Description">{{toPlainText(member.profile || '')}}</p>
-          </NuxtLink>
-        </article>
-        <Pagination />
+  <Wrapper :app="app" :use-h1="false">
+    <main class="Container">
+      <div v-if="members.length > 0" class="Search">
+        <p class="Search_Text">Found {{ total }} results for your search</p>
+        <div class="Search_Results">
+          <article v-for="member in members" :key="member._id" class="Article">
+            <NuxtLink :to="`/member/${member.slug}`" class="Article_Link">
+              <h1 class="Article_Title">{{ member.fullName }}</h1>
+              <p class="Article_Description">
+                {{ toPlainText(member.profile || '') }}
+              </p>
+            </NuxtLink>
+          </article>
+          <Pagination />
+        </div>
       </div>
-    </div>
-    <div v-else-if="isLoading === false" class="Empty">
-      <div class="Empty_Emoji">😵</div>
-      <h1 class="Empty_Title">Nothing found</h1>
-      <p class="Empty_Description">Sorry, but nothing matched search terms…<br>Please try again with different keywords!</p>
-    </div>
-  </main>
+      <div v-else-if="isLoading === false" class="Empty">
+        <div class="Empty_Emoji">😵</div>
+        <h1 class="Empty_Title">Nothing found</h1>
+        <p class="Empty_Description">
+          Sorry, but nothing matched search terms…<br />Please try again with
+          different keywords!
+        </p>
+      </div>
+    </main>
+  </Wrapper>
 </template>
 
 <script>
 import { getMembers } from 'api/member'
+import { getApp } from 'api/app'
 import { toPlainText } from 'utils/markdown'
 
 export default {
-  layout: 'sub',
+  async asyncData({ $config }) {
+    const app = await getApp($config)
+    return {
+      app,
+    }
+  },
   data() {
     return {
       members: [],
       total: 0,
-      isLoading: true
+      isLoading: true,
     }
   },
   async created() {
@@ -38,17 +51,18 @@ export default {
       search: this.$route.query.q || '',
       query: {
         profile: {
-          fmt: 'text'
-        }
-      }
+          fmt: 'text',
+        },
+        limit: 100,
+      },
     })
     this.members = members
     this.total = total
     this.isLoading = false
   },
   methods: {
-    toPlainText
-  }
+    toPlainText,
+  },
 }
 </script>
 
@@ -71,7 +85,7 @@ export default {
 }
 .Article {
   border: 1px solid #e5e5e5;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,.05);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05);
   border-radius: 4px;
   margin: 0 0 16px 0;
 }
@@ -82,7 +96,7 @@ export default {
   color: #333;
   text-decoration: none;
   border-radius: 4px;
-  transition: background .2s;
+  transition: background 0.2s;
   background: #fff;
 }
 .Article_Link:hover {

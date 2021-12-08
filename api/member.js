@@ -1,12 +1,16 @@
 import { createClient } from 'newt-client-js'
+
 const MEMBER_MODEL_NAME = 'member'
 
-export const getMembers = async (config, options={ search: '', position: '', page: 1, query: {} }) => {
+export const getMembers = async (
+  config,
+  options = { search: '', position: '', page: 1, query: {} }
+) => {
   try {
     const client = createClient({
       projectUid: config.projectUid,
       token: config.token,
-      apiType: 'cdn',
+      apiType: config.apiType,
     })
     const _options = {
       search: '',
@@ -16,20 +20,20 @@ export const getMembers = async (config, options={ search: '', position: '', pag
       ...options,
     }
     const query = {
-      ...(_options.query || {})
+      ...(_options.query || {}),
     }
     if (_options.search) {
       query.or = [
         {
           fullName: {
-            match: _options.search
-          }
+            match: _options.search,
+          },
         },
         {
           profile: {
-            match: _options.search
-          }
-        }
+            match: _options.search,
+          },
+        },
       ]
     }
     if (_options.position) {
@@ -39,14 +43,14 @@ export const getMembers = async (config, options={ search: '', position: '', pag
     const limit = config.pageLimit || 10
     const skip = (page - 1) * limit
     const result = await client.getContents({
-      appUid:config.appUid,
+      appUid: config.appUid,
       modelUid: MEMBER_MODEL_NAME,
       query: {
         depth: 2,
         limit,
         skip,
-        ...query
-      }
+        ...query,
+      },
     })
     return {
       ...result,
@@ -65,16 +69,16 @@ export const getMemberBySlug = async (config, slug) => {
     const client = createClient({
       projectUid: config.projectUid,
       token: config.token,
-      apiType: 'cdn',
+      apiType: config.apiType,
     })
     const result = await client.getContents({
-      appUid:config.appUid,
+      appUid: config.appUid,
       modelUid: MEMBER_MODEL_NAME,
       query: {
         depth: 2,
         limit: 1,
         slug,
-      }
+      },
     })
     return result.items.length === 1 ? result.items[0] : null
   } catch (err) {
