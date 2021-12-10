@@ -31,6 +31,7 @@
 import { getMembers } from 'api/member'
 import { getApp } from 'api/app'
 import { toPlainText } from 'utils/markdown'
+import { getSiteName } from 'utils/head'
 
 export default {
   async asyncData({ $config }) {
@@ -44,6 +45,11 @@ export default {
       members: [],
       total: 0,
       isLoading: true,
+    }
+  },
+  head() {
+    return {
+      title: getSiteName(this.app),
     }
   },
   async created() {

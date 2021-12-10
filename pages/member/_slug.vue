@@ -52,6 +52,11 @@ export default {
       app,
     }
   },
+  head() {
+    return {
+      title: this.member.fullName,
+    }
+  },
 }
 </script>
 
@@ -101,12 +106,24 @@ export default {
   margin: 40px 0 24px 0;
   line-height: 1.4;
 }
-.Article_Body >>> h1 { font-size: 2.4rem; }
-.Article_Body >>> h2 { font-size: 2.2rem; }
-.Article_Body >>> h3 { font-size: 2rem; }
-.Article_Body >>> h4 { font-size: 1.8rem; }
-.Article_Body >>> h5 { font-size: 1.6rem; }
-.Article_Body >>> h6 { font-size: 1.4rem; }
+.Article_Body >>> h1 {
+  font-size: 2.4rem;
+}
+.Article_Body >>> h2 {
+  font-size: 2.2rem;
+}
+.Article_Body >>> h3 {
+  font-size: 2rem;
+}
+.Article_Body >>> h4 {
+  font-size: 1.8rem;
+}
+.Article_Body >>> h5 {
+  font-size: 1.6rem;
+}
+.Article_Body >>> h6 {
+  font-size: 1.4rem;
+}
 .Article_Body >>> p {
   margin: 0 0 24px 0;
 }
@@ -133,7 +150,7 @@ export default {
   padding: 0 0 0 20px;
 }
 .Article_Body >>> blockquote {
-  border-left: 4px solid #CCC;
+  border-left: 4px solid #ccc;
   padding: 0 0 0 40px;
   margin: 0 0 20px 0;
 }
@@ -146,7 +163,8 @@ export default {
   font-size: 1.4rem;
   line-height: 1.6;
   overflow: auto;
-  font-family: 'Segoe UI Emoji', 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  font-family: 'Segoe UI Emoji', 'Helvetica Neue', Arial,
+    'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
 }
 .Article_Body >>> code {
   border: 1px solid #ddd;
@@ -156,7 +174,8 @@ export default {
   margin: 0 4px;
   color: #e01d5a;
   font-size: 1.4rem;
-  font-family: 'Segoe UI Emoji', 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  font-family: 'Segoe UI Emoji', 'Helvetica Neue', Arial,
+    'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
 }
 .Article_Body >>> pre code {
   border: none;
