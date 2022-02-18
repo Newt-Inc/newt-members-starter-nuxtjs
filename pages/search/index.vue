@@ -28,22 +28,17 @@
 </template>
 
 <script>
-import { getMembers } from 'api/member'
-import { getApp } from 'api/app'
+import { mapGetters } from 'vuex'
 import { toPlainText } from 'utils/markdown'
 import { getSiteName } from 'utils/head'
 
 export default {
-  async asyncData({ $config }) {
-    const app = await getApp($config)
-    return {
-      app,
-    }
+  async asyncData({ $config, store }) {
+    await store.dispatch('fetchApp', $config)
+    return {}
   },
   data() {
     return {
-      members: [],
-      total: 0,
       isLoading: true,
     }
   },
@@ -52,8 +47,12 @@ export default {
       title: getSiteName(this.app),
     }
   },
+  computed: {
+    ...mapGetters(['app', 'members', 'total']),
+  },
   async created() {
-    const { members, total } = await getMembers(this.$config, {
+    await this.$store.dispatch('fetchMembers', {
+      ...this.$config,
       search: this.$route.query.q || '',
       query: {
         profile: {
@@ -62,8 +61,6 @@ export default {
         limit: 100,
       },
     })
-    this.members = members
-    this.total = total
     this.isLoading = false
   },
   methods: {

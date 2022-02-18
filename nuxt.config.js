@@ -6,7 +6,9 @@ export default {
     appUid: 'AppUID',
     token: 'CDN APIトークン',
     apiType: 'cdn',
-    pageLimit: 12,
+    memberModelUid: 'member',
+    positionModelUid: 'position',
+    pageLimit: 2,
   },
 
   // Target: https://go.nuxtjs.dev/config-target

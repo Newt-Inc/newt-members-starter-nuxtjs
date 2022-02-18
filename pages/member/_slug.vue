@@ -1,11 +1,11 @@
 <template>
   <Wrapper :app="app" :use-h1="false">
     <main class="Container">
-      <article v-if="member" class="Article">
+      <article v-if="currentMember" class="Article">
         <div class="Article_Eyecatch">
-          <template v-if="member.profileImage">
+          <template v-if="currentMember.profileImage">
             <img
-              :src="member.profileImage.src"
+              :src="currentMember.profileImage.src"
               alt=""
               width="1080"
               height="680"
@@ -28,34 +28,69 @@
             </div>
           </template>
         </div>
-        <p v-if="member.position" class="Article_Category">
-          {{ member.position.name }}
+        <p v-if="currentMember.position" class="Article_Category">
+          {{ currentMember.position.name }}
         </p>
-        <h1 class="Article_Title">{{ member.fullName }}</h1>
+        <h1 class="Article_Title">{{ currentMember.fullName }}</h1>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <div class="Article_Body" v-html="member.profile"></div>
+        <div class="Article_Body" v-html="currentMember.profile"></div>
       </article>
     </main>
   </Wrapper>
 </template>
 
 <script>
-import { getMemberBySlug } from 'api/member'
-import { getApp } from 'api/app'
+import { mapGetters } from 'vuex'
+import { toPlainText } from '../../utils/markdown'
 
 export default {
-  async asyncData({ $config, params }) {
-    const member = await getMemberBySlug($config, params.slug)
-    const app = await getApp($config)
-    return {
-      member,
-      app,
-    }
+  async asyncData({ $config, store, params, redirect }) {
+    await store.dispatch('fetchApp', $config)
+    await store.dispatch('fetchCurrentMember', {
+      ...$config,
+      slug: params.slug,
+    })
+    if (!store.getters.currentMember) return redirect(302, '/')
+    return {}
   },
   head() {
     return {
-      title: this.member.fullName,
+      title: this.title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.description,
+        },
+        {
+          hid: 'og:image',
+          name: 'og:image',
+          content: this.ogImage,
+        },
+      ],
     }
+  },
+  computed: {
+    ...mapGetters(['app', 'currentMember']),
+    title() {
+      return (this.currentMember && this.currentMember.fullName) || 'Members'
+    },
+    description() {
+      if (this.currentMember && this.currentMember.profile) {
+        return toPlainText(this.currentMember.profile).slice(0, 200)
+      }
+      return ''
+    },
+    ogImage() {
+      if (
+        this.currentMember &&
+        this.currentMember.profileImage &&
+        this.currentMember.profileImage.src
+      ) {
+        return this.currentMember.profileImage.src
+      }
+      return ''
+    },
   },
 }
 </script>
