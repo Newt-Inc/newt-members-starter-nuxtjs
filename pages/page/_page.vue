@@ -1,53 +1,47 @@
 <template>
-  <Wrapper :app="app">
-    <main class="Container">
-      <Cover
-        v-if="app && app.cover && app.cover.value"
-        :img="app.cover.value"
-      />
-      <div class="Members">
-        <Dropdown :positions="positions" />
-        <div class="Inner">
-          <MemberCard
-            v-for="member in members"
-            :key="member._id"
-            :member="member"
-          />
-        </div>
-        <Pagination :total="total" :current="pageNumber" />
+  <main class="Container">
+    <Cover v-if="app && app.cover && app.cover.value" :img="app.cover.value" />
+    <div class="Members">
+      <Dropdown :positions="positions" />
+      <div class="Inner">
+        <MemberCard
+          v-for="member in members"
+          :key="member._id"
+          :member="member"
+        />
       </div>
-    </main>
-  </Wrapper>
+      <Pagination :total="total" :current="pageNumber" />
+    </div>
+  </main>
 </template>
 
 <script>
-import { getMembers } from 'api/member'
-import { getPositions } from 'api/position'
-import { getApp } from 'api/app'
+import { mapGetters } from 'vuex'
 import { getSiteName } from 'utils/head'
 
 export default {
-  async asyncData({ $config, redirect, params }) {
+  async asyncData({ $config, store, redirect, params }) {
+    await store.dispatch('fetchApp', $config)
+    await store.dispatch('fetchPositions', $config)
+
     const pageNumber = Number(params.page)
     if (Number.isNaN(pageNumber)) return redirect(302, '/')
+    await store.dispatch('fetchMembers', {
+      ...$config,
+      page: pageNumber,
+    })
 
-    const [resMembers, resPositions, app] = await Promise.all([
-      getMembers($config, { page: pageNumber }),
-      getPositions($config),
-      getApp($config),
-    ])
     return {
       pageNumber,
-      members: resMembers.members,
-      total: resMembers.total,
-      positions: resPositions.positions,
-      app,
     }
   },
   head() {
     return {
       title: getSiteName(this.app),
     }
+  },
+  computed: {
+    ...mapGetters(['app', 'members', 'total', 'positions']),
   },
 }
 </script>

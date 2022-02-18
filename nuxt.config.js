@@ -6,7 +6,9 @@ export default {
     appUid: process.env.APP_UID,
     token: process.env.API_TOKEN,
     apiType: 'cdn',
-    pageLimit: 12,
+    memberModelUid: 'member',
+    positionModelUid: 'position',
+    pageLimit: 10,
   },
 
   // Target: https://go.nuxtjs.dev/config-target
