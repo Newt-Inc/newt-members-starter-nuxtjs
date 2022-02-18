@@ -1,27 +1,22 @@
 <template>
-  <Wrapper :app="app">
-    <main class="Container">
-      <Cover
-        v-if="app && app.cover && app.cover.value"
-        :img="app.cover.value"
-      />
-      <div class="Members">
-        <Dropdown :positions="positions" :selected="selected" />
-        <div class="Inner">
-          <MemberCard
-            v-for="member in members"
-            :key="member._id"
-            :member="member"
-          />
-        </div>
-        <Pagination
-          :total="total"
-          :current="pageNumber"
-          :base-path="`/position/${selected}`"
+  <main class="Container">
+    <Cover v-if="app && app.cover && app.cover.value" :img="app.cover.value" />
+    <div class="Members">
+      <Dropdown :positions="positions" :selected="selected" />
+      <div class="Inner">
+        <MemberCard
+          v-for="member in members"
+          :key="member._id"
+          :member="member"
         />
       </div>
-    </main>
-  </Wrapper>
+      <Pagination
+        :total="total"
+        :current="pageNumber"
+        :base-path="`/position/${selected}`"
+      />
+    </div>
+  </main>
 </template>
 
 <script>

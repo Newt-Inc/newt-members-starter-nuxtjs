@@ -1,42 +1,40 @@
 <template>
-  <Wrapper :app="app" :use-h1="false">
-    <main class="Container">
-      <article v-if="currentMember" class="Article">
-        <div class="Article_Eyecatch">
-          <template v-if="currentMember.profileImage">
-            <img
-              :src="currentMember.profileImage.src"
-              alt=""
-              width="1080"
-              height="680"
-            />
-          </template>
-          <template v-else>
-            <div class="Article_EyecatchEmpty">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="60px"
-                height="60px"
-                viewBox="0 0 24 24"
-                fill="#CCCCCC"
-              >
-                <path d="M0 0h24v24H0V0z" fill="none" />
-                <path
-                  d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"
-                />
-              </svg>
-            </div>
-          </template>
-        </div>
-        <p v-if="currentMember.position" class="Article_Category">
-          {{ currentMember.position.name }}
-        </p>
-        <h1 class="Article_Title">{{ currentMember.fullName }}</h1>
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <div class="Article_Body" v-html="currentMember.profile"></div>
-      </article>
-    </main>
-  </Wrapper>
+  <main class="Container">
+    <article v-if="currentMember" class="Article">
+      <div class="Article_Eyecatch">
+        <template v-if="currentMember.profileImage">
+          <img
+            :src="currentMember.profileImage.src"
+            alt=""
+            width="1080"
+            height="680"
+          />
+        </template>
+        <template v-else>
+          <div class="Article_EyecatchEmpty">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="60px"
+              height="60px"
+              viewBox="0 0 24 24"
+              fill="#CCCCCC"
+            >
+              <path d="M0 0h24v24H0V0z" fill="none" />
+              <path
+                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"
+              />
+            </svg>
+          </div>
+        </template>
+      </div>
+      <p v-if="currentMember.position" class="Article_Category">
+        {{ currentMember.position.name }}
+      </p>
+      <h1 class="Article_Title">{{ currentMember.fullName }}</h1>
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <div class="Article_Body" v-html="currentMember.profile"></div>
+    </article>
+  </main>
 </template>
 
 <script>

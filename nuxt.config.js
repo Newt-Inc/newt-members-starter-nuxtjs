@@ -8,7 +8,7 @@ export default {
     apiType: 'cdn',
     memberModelUid: 'member',
     positionModelUid: 'position',
-    pageLimit: 2,
+    pageLimit: 10,
   },
 
   // Target: https://go.nuxtjs.dev/config-target
