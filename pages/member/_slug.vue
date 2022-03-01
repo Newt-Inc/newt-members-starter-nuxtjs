@@ -39,7 +39,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { toPlainText } from '../../utils/markdown'
+import { htmlToText } from 'html-to-text'
 
 export default {
   async asyncData({ $config, store, params, redirect }) {
@@ -75,7 +75,7 @@ export default {
     },
     description() {
       if (this.currentMember && this.currentMember.profile) {
-        return toPlainText(this.currentMember.profile).slice(0, 200)
+        return htmlToText(this.currentMember.profile).slice(0, 200)
       }
       return ''
     },

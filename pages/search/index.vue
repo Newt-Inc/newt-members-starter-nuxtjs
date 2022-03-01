@@ -7,7 +7,7 @@
           <NuxtLink :to="`/member/${member.slug}`" class="Article_Link">
             <h1 class="Article_Title">{{ member.fullName }}</h1>
             <p class="Article_Description">
-              {{ toPlainText(member.profile || '') }}
+              {{ htmlToText(member.profile || '') }}
             </p>
           </NuxtLink>
         </article>
@@ -27,7 +27,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { toPlainText } from 'utils/markdown'
+import { htmlToText } from 'html-to-text'
 import { getSiteName } from 'utils/head'
 
 export default {
@@ -62,7 +62,7 @@ export default {
     this.isLoading = false
   },
   methods: {
-    toPlainText,
+    htmlToText,
   },
 }
 </script>

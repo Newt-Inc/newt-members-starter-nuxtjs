@@ -7,45 +7,49 @@
         </template>
         <template v-else>
           <div class="Article_EyecatchEmpty">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0 0 24 24" fill="#CCCCCC"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="50px"
+              height="50px"
+              viewBox="0 0 24 24"
+              fill="#CCCCCC"
+            >
+              <path d="M0 0h24v24H0V0z" fill="none" />
+              <path
+                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"
+              />
+            </svg>
           </div>
         </template>
       </div>
       <div class="Article_Inner">
-        <p class="Article_Category">{{member.position.name}}</p>
-        <h2 class="Article_Title">{{member.fullName}}</h2>
+        <p class="Article_Category">{{ member.position.name }}</p>
+        <h2 class="Article_Title">{{ member.fullName }}</h2>
       </div>
     </NuxtLink>
   </article>
 </template>
 
 <script>
-import { formatDate } from 'utils/date'
-
 export default {
   props: {
     member: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   computed: {
     authorName() {
       return (this.member.author && this.member.author.fullName) || 'NO NAME'
-    }
+    },
   },
-  methods: {
-    formatDate(dateStr) {
-      return dateStr ? formatDate(dateStr) : ''
-    }
-  }
 }
 </script>
 
 <style scoped>
 .Article {
   border: 1px solid #e5e5e5;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,.05);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05);
   border-radius: 4px;
   margin: 0 0 16px 0;
   width: 100%;
@@ -57,7 +61,7 @@ export default {
   color: #333;
   text-decoration: none;
   border-radius: 3px;
-  transition: background .2s;
+  transition: background 0.2s;
   background: #fff;
   overflow: hidden;
 }
@@ -73,7 +77,7 @@ export default {
   position: relative;
 }
 .Article_Eyecatch::before {
-  content: "";
+  content: '';
   padding-top: 54%;
   display: block;
 }
@@ -96,7 +100,7 @@ export default {
   height: 100%;
 }
 .Article_EyecatchEmpty {
-  background: rgba(0,0,0,.05);
+  background: rgba(0, 0, 0, 0.05);
   position: absolute;
   left: 0;
   top: 0;
