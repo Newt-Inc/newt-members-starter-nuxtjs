@@ -107,3 +107,7 @@ $ yarn start
 | --- | --- | --- | --- |
 | name | 名前 | テキスト | 必須フィールド, このフィールドをタイトルに使う |
 | slug | スラッグ | テキスト | 必須フィールド |
+
+## License
+
+This repository is published under the [MIT License](https://github.com/Newt-Inc/newt-members-starter-nuxtjs/blob/main/LICENSE).
