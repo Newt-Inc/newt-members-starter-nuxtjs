@@ -110,4 +110,4 @@ $ yarn start
 
 ## License
 
-This repository is published under the [MIT License](https://github.com/Newt-Inc/newt-members-starter-nuxtjs/blob/main/LICENSE).
+[MIT License](https://github.com/Newt-Inc/newt-members-starter-nuxtjs/blob/main/LICENSE).
