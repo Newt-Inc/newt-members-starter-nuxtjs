@@ -144,16 +144,15 @@ export const actions = {
         token,
         apiType,
       })
-      const { items } = await client.getContents({
+      const member = await client.getFirstContent({
         appUid,
         modelUid: memberModelUid,
         query: {
           depth: 2,
-          limit: 1,
           slug,
         },
       })
-      commit('setCurrentMember', items.length === 1 ? items[0] : null)
+      commit('setCurrentMember', member)
     } catch (err) {
       return null
     }
