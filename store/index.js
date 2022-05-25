@@ -82,7 +82,7 @@ export const actions = {
             },
           },
           {
-            profile: {
+            biography: {
               match: search,
             },
           },

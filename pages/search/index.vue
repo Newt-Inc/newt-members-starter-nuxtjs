@@ -7,7 +7,7 @@
           <NuxtLink :to="`/member/${member.slug}`" class="Article_Link">
             <h1 class="Article_Title">{{ member.fullName }}</h1>
             <p class="Article_Description">
-              {{ htmlToText(member.profile || '') }}
+              {{ htmlToText(member.biography || '') }}
             </p>
           </NuxtLink>
         </article>
@@ -53,7 +53,7 @@ export default {
       ...this.$config,
       search: this.$route.query.q || '',
       query: {
-        profile: {
+        biography: {
           fmt: 'text',
         },
         limit: 100,

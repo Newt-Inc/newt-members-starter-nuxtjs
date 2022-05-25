@@ -98,7 +98,7 @@ $ yarn start
 | fullName | タイトル | テキスト | 必須フィールド, このフィールドをタイトルに使う |
 | slug | スラッグ | テキスト | 必須フィールド |
 | profileImage | カバー画像 | 画像 |  |
-| profile | プロフィール | Markdown or リッチテキスト |  |
+| biography | 自己紹介 | Markdown or リッチテキスト |  |
 | position | ポジション | 参照（Positionモデル） |  |
 
 ### Position（`uid: position`）モデル
@@ -107,6 +107,14 @@ $ yarn start
 | --- | --- | --- | --- |
 | name | 名前 | テキスト | 必須フィールド, このフィールドをタイトルに使う |
 | slug | スラッグ | テキスト | 必須フィールド |
+
+### メタ情報（`id: META`）カスタムフィールドタイプ
+
+| フィールドID | フィールド名 | フィールドタイプ | オプション |
+| --- | --- | --- | --- |
+| title | Title | テキスト | |
+| description | Description | テキスト | |
+| ogImage | OG画像 | 画像 |  |
 
 ## License
 

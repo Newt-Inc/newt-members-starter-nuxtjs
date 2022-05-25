@@ -32,7 +32,7 @@
       </p>
       <h1 class="Article_Title">{{ currentMember.fullName }}</h1>
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div class="Article_Body" v-html="currentMember.profile"></div>
+      <div class="Article_Body" v-html="currentMember.biography"></div>
     </article>
   </main>
 </template>
@@ -63,7 +63,7 @@ export default {
         {
           hid: 'og:type',
           property: 'og:type',
-          content: 'article'
+          content: 'article',
         },
         {
           hid: 'og:title',
@@ -82,7 +82,7 @@ export default {
         },
         {
           name: 'twitter:card',
-          content: 'summary_large_image'
+          content: 'summary_large_image',
         },
       ],
     }
@@ -93,8 +93,8 @@ export default {
       return (this.currentMember && this.currentMember.fullName) || 'Members'
     },
     description() {
-      if (this.currentMember && this.currentMember.profile) {
-        return htmlToText(this.currentMember.profile).slice(0, 200)
+      if (this.currentMember && this.currentMember.biography) {
+        return htmlToText(this.currentMember.biography).slice(0, 200)
       }
       return ''
     },
